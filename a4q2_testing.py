@@ -88,6 +88,44 @@ class Statistics(object):
         else:
             return  max(self.__inputs)
 
+    def mode(self):
+        """
+        Purpose:
+            Return the maximum value seen so far.
+        Post-conditions:
+            (none)
+        Return:
+            The maximum seen so far.
+            Note: if no data has been seen, NONe is returned.
+
+        """
+        data = Counter(self.__inputs)
+        data_dict = dict(data)
+        if len(self.__inputs) == 0:
+            return None
+        else:
+            return [k for k, v in data_dict.items() if v == max(list(data.values()))][0]
+
+    def range(self):
+        """
+        Purpose:
+            Return the range for the input.
+        Post-conditions:
+            (none)
+        Return:
+            The range.
+            Note: if no data has been seen, NONe is returned.
+
+        """
+        mi = self.min()
+        ma = self.max()
+
+        if len(self.__inputs) == 0:
+            return None
+        else:
+            return ma - mi
+
+
 
 def close_enough(a, b, tolerance):
     """
@@ -191,3 +229,102 @@ result = stats.mean()
 if not close_enough(result,expected,tolerance):
     print('Error in {}: expected {} but obtained {} -- {}'.format(test_item, expected, result, reason))
 
+#min general
+
+test_item = 'min'
+data1 = [.5, 3.6, 3.3, .6]
+expected = .5
+reason = "Check min after multiple value added"
+
+# call the operation
+stats = Statistics()
+for i in data1:
+    stats.add(i)
+
+result = stats.min()
+
+if expected != result:
+    print('Error in {}: expected {} but obtained {} -- {}'.format(test_item, expected, result, reason))
+
+# min none test case
+test_item = 'min'
+data1 = []
+expected = None
+reason = "Check min after multiple value added"
+
+# call the operation
+stats = Statistics()
+for i in data1:
+    stats.add(i)
+
+result = stats.min()
+
+if expected != result:
+    print('Error in {}: expected {} but obtained {} -- {}'.format(test_item, expected, result, reason))
+
+
+#max general
+
+test_item = 'max'
+data1 = [.5, 3.6, 3.3, .6]
+expected = 3.6
+reason = "Check min after multiple value added"
+
+# call the operation
+stats = Statistics()
+for i in data1:
+    stats.add(i)
+
+result = stats.max()
+
+if expected != result:
+    print('Error in {}: expected {} but obtained {} -- {}'.format(test_item, expected, result, reason))
+
+# max none test case
+test_item = 'max'
+data1 = []
+expected = None
+reason = "Check min after multiple value added"
+
+# call the operation
+stats = Statistics()
+for i in data1:
+    stats.add(i)
+
+result = stats.max()
+
+if expected != result:
+    print('Error in {}: expected {} but obtained {} -- {}'.format(test_item, expected, result, reason))
+
+
+# mode general test case
+test_item = 'mode'
+data1 = [1,1,2,2,2,3,3,3,3,3]
+expected = 3
+reason = "Check mode after multiple value added"
+
+# call the operation
+stats = Statistics()
+for i in data1:
+    stats.add(i)
+
+result = stats.mode()
+
+if expected != result:
+    print('Error in {}: expected {} but obtained {} -- {}'.format(test_item, expected, result, reason))
+
+
+# range general test case
+test_item = 'range'
+data1 = [1,1,2,2,2,3,3,3,3,3,10]
+expected = 9
+reason = "Check mode after multiple value added"
+
+# call the operation
+stats = Statistics()
+for i in data1:
+    stats.add(i)
+
+result = stats.range()
+if expected != result:
+    print('Error in {}: expected {} but obtained {} -- {}'.format(test_item, expected, result, reason))
